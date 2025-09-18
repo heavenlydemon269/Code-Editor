@@ -2,19 +2,13 @@
 import streamlit as st
 import requests
 import time
-from ai_manager import AIManager
-
-st.subheader("AI Manager Feedback")
-if st.button("Check Progress"):
-    manager = AIManager(project="calculator")
-    feedback = manager.analyze_code(code)
-    st.text(feedback)
+from ai_manager import AIManager   # <-- make sure ai_manager.py is in same folder
 
 # ----------------------------
 # CONFIG
 # ----------------------------
 JUDGE0_URL = "https://judge0-ce.p.rapidapi.com/submissions"
-RAPIDAPI_KEY = st.secrets["Judge0_key"]  # <- Replace with your Judge0 key
+RAPIDAPI_KEY = "YOUR_API_KEY"  # Replace with your Judge0 key
 HEADERS = {
     "x-rapidapi-key": RAPIDAPI_KEY,
     "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
@@ -36,6 +30,18 @@ print(add(2, 3))
 
 code = st.text_area("Write your Python code:", value=default_code, height=300)
 
+# ----------------------------
+# AI MANAGER CHECK
+# ----------------------------
+if st.button("Check Progress"):
+    manager = AIManager(project="calculator")  # ✅ Now manager is defined
+    feedback = manager.analyze_code(code)
+    st.subheader("AI Manager Feedback:")
+    st.text(feedback)
+
+# ----------------------------
+# RUN CODE WITH JUDGE0
+# ----------------------------
 if st.button("Run Code"):
     payload = {
         "language_id": 71,  # Python 3
