@@ -2,6 +2,13 @@
 import streamlit as st
 import requests
 import time
+from ai_manager import AIManager
+
+st.subheader("AI Manager Feedback")
+if st.button("Check Progress"):
+    manager = AIManager(project="calculator")
+    feedback = manager.analyze_code(code)
+    st.text(feedback)
 
 # ----------------------------
 # CONFIG
